@@ -89,6 +89,11 @@ section{margin-top:44px;scroll-margin-top:24px}
 .pop-views{flex:0 0 auto;text-align:right}
 .pop-views b{display:block;font-size:15px;line-height:1;color:var(--accent)}
 .pop-views span{font-size:11px;color:var(--faint)}
+.pop-change{flex:0 0 auto;font-size:12px;font-weight:700;line-height:1;white-space:nowrap}
+.pop-change.up{color:#fa5d00}
+.pop-change.down{color:#6b7c93}
+.pop-change.new{color:#fa5d00;background:#fff1e6;border-radius:999px;padding:4px 8px}
+.pop-change.same{color:#8e8b87;font-weight:600}
 
 /* Quiz */
 @media(max-width:640px){.urgent{flex-direction:column}}
@@ -158,7 +163,7 @@ section{margin-top:44px;scroll-margin-top:24px}
   </section>
 
   <section id="popular">
-    <div class="sec-head"><h2>인기글</h2><span>최근 2주(11/09~11/22) 조회수 기준</span></div>
+    <div class="sec-head"><h2>인기글</h2><span>주간(11/16~11/22) 조회수 기준</span></div>
     <div class="list" id="list-popular"></div>
   </section>
 
@@ -260,17 +265,30 @@ var events=[
  {t:"청년문화예술패스 추가 발급, 최대 20만원 신청법",d:"2006·2007년생 대상 — 수도권 15만원·비수도권 20만원, 1차 신청 11/23부터·2차 12/1부터 선착순",date:"12월 10일 마감",url:p("224488630705"),start:"2026-11-23",startText:"11월 23일",end:"2026-12-10"},
  {t:"부산 크리스마스 빌리지 시간대별 가격, 프로그램 정리",d:"11/26~12/25 영화의전당 야외광장 — 온라인 5,900원부터, 현장 구매보다 장당 2,000원 저렴",date:"12월 25일 마감",url:"https://blog.naver.com/4xxx8/224489277419",start:"2026-11-26",startText:"11월 26일",end:"2026-12-25"}
 ];
+/* 직전 인기글 스냅샷(11/09~11/15)의 글 ID 순서. 인기글 갱신 때마다 갱신 전 popular의 URL을 여기로 옮길 것 */
+var prevPopular=[
+ "https://blog.naver.com/4xxx8/224470681789",
+ "https://blog.naver.com/4xxx8/224471404091",
+ "https://blog.naver.com/4xxx8/224474350043",
+ "https://blog.naver.com/4xxx8/224473952479",
+ "https://blog.naver.com/4xxx8/224475532050",
+ "https://blog.naver.com/4xxx8/224469811550",
+ "https://blog.naver.com/4xxx8/224474790216",
+ "https://blog.naver.com/4xxx8/224476795760",
+ "https://blog.naver.com/4xxx8/224475881512",
+ "https://blog.naver.com/4xxx8/224463948588"
+];
 var popular=[
- {t:"피클AI, 전화까지 걸어주는 무료 AI 비서 직접 써 본 후기",url:"https://blog.naver.com/4xxx8/224470681789"},
- {t:"지마켓 디즈니플러스 꼭 멤버십 라이프플러스, 모르면 손해",url:"https://blog.naver.com/4xxx8/224471404091"},
- {t:"[이벤트] 카카오페이 초코녹이기, 모니모 100% 간식 줍줍",url:"https://blog.naver.com/4xxx8/224474350043"},
- {t:"2026 호텔 크리스마스 케이크 사전예약 오픈! 가격·할인 총정리",url:"https://blog.naver.com/4xxx8/224473952479"},
- {t:"치이카와 클리닉 팝업 더현대, 오픈 전 꼭 알아둘 예약·굿즈 비밀",url:"https://blog.naver.com/4xxx8/224475532050"},
- {t:"성수 팝업 5곳, 사전예약부터 하루 만에 도는 예약·동선 꿀팁",url:"https://blog.naver.com/4xxx8/224469811550"},
- {t:"뚜레쥬르 네이버페이 1만P 적립, 2만원 결제 조건 정리",url:"https://blog.naver.com/4xxx8/224474790216"},
+ {t:"11월 자동차보험 이벤트 조회만 해도 약 4만원",url:"https://blog.naver.com/4xxx8/224478084161"},
+ {t:"카카오뱅크 스텔스통장 이벤트, 숨는 통장에 최대 3만원 캐시",url:"https://blog.naver.com/4xxx8/224479150256"},
+ {t:"치이카와 클리닉 팝업 예약 11월 23일, 역대 팝업 비교 정리",url:"https://blog.naver.com/4xxx8/224483177885"},
+ {t:"요기요 수능 쿠폰 5,000원, 11월 20일까지 등록·사용법",url:"https://blog.naver.com/4xxx8/224483636539"},
+ {t:"스타벅스 헬로키티 MD 11월 19일 출시, 8곳 구매처 정리",url:"https://blog.naver.com/4xxx8/224479960127"},
  {t:"더현대 주차요금 2시간 18,000원, 3만원에 1시간 공짜 꿀팁",url:"https://blog.naver.com/4xxx8/224476795760"},
- {t:"비행기 수험생할인 티웨이항공 제주 25%, 일본 5% 함정 정리",url:"https://blog.naver.com/4xxx8/224475881512"},
- {t:"네이버페이 현장결제 11월 이벤트, 날짜 놓치면 못 받는 혜택",url:"https://blog.naver.com/4xxx8/224463948588"}
+ {t:"KB 체크카드 있는 사람만, 11월 19일 투썸 33% 할인",url:"https://blog.naver.com/4xxx8/224482814374"},
+ {t:"커피빈 오로라 5기 기존 4만원이 무료, 11월 19일 모집",url:"https://blog.naver.com/4xxx8/224481486392"},
+ {t:"하나증권V 신규·휴면 이벤트 5만·4만+주식 받는 법 정리",url:"https://blog.naver.com/4xxx8/224478045859"},
+ {t:"슬램덩크 팝업 12월 현장입장 불가, 11월 17일 예약 오픈",url:"https://blog.naver.com/4xxx8/224478481273"}
 ];
 /* ===== 방문자 오늘 날짜 기준 자동 계산 =====
    TODAY: 방문자가 페이지를 연 날(로컬 날짜). WEEK_END: 그 주의 일요일 */
@@ -414,10 +432,18 @@ document.getElementById('list-start').innerHTML=startEvents.length?startEvents.m
 document.querySelector('.nav a[href="#start"]').addEventListener('click',function(){
   if(sortMode==='start'){setSort('end');}
 });
+function popChange(x,i){
+  var prev=prevPopular.indexOf(x.url);
+  if(prev===-1)return '<span class="pop-change new">NEW</span>';
+  if(prev===i)return '<span class="pop-change same">–</span>';
+  if(prev>i)return '<span class="pop-change up">▲'+(prev-i)+'</span>';
+  return '<span class="pop-change down">▼'+(i-prev)+'</span>';
+}
 document.getElementById('list-popular').innerHTML=popular.map(function(x,i){
   return '<a class="pop-row" href="'+x.url+'" target="_blank" rel="noopener">'
     +'<span class="pop-rank'+(i<3?' top':'')+'">'+(i+1)+'</span>'
     +'<div class="pop-main"><p class="pop-title">'+x.t+'</p></div>'
+    +popChange(x,i)
     +'<span class="arrow" aria-hidden="true">›</span></a>';
 }).join('');
 </script>
